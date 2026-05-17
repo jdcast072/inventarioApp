@@ -8,6 +8,7 @@
   <AssemblyName>inventarioApp</AssemblyName>
   <RootNamespace>inventarioApp</RootNamespace>
   <Version>1.0.0</Version>
+  <Author>Juan Castañeda</Author>
   <Description>Aplicación de inventario para gestión de productos.</Description>
   </PropertyGroup>
 </Project>
