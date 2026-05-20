@@ -22,15 +22,12 @@ if (args.Length > 0){
     };
 };
 
-mostrarBanner();
+int cantidadProductos = 0;
+decimal valorTotalDelInventario = 0.00m;
+bool sistemaActivo = true;
+string nombreSistema = "Sistema de Gestión de Inventario";
+decimal precio;
 
-Console.Write("Ingrese un comando o (use 'salir' para terminar): ");
-string? entrada = Console.ReadLine(); //Stdin: Lee la entrada del usuario
-
-if (string.IsNullOrWhiteSpace(entrada) || entrada.ToLower() == "salir") {
-    Console.WriteLine("Hasta luego. Saliendo... ");//Stdout: Salida del comando o programa
-    Environment.Exit(0);
-}
 
 void mostrarBanner() {
 Console.WriteLine("╔══════════════════════════════════════╗");
@@ -43,9 +40,44 @@ Console.WriteLine($"Plataforma del SO: {Environment.OSVersion.Platform}");
 Console.WriteLine($"Nombre ejecutado del programa: {assembly}");
 }
 
+mostrarBanner();
+
+Console.WriteLine("Estado del sistema");
+Console.WriteLine($"Nombre: {nombreSistema}");
+Console.WriteLine($"Productos registrados: {cantidadProductos}");
+Console.WriteLine($"Valor total del inventario: ${valorTotalDelInventario:N2}");
+Console.WriteLine($"Sistema Activo: {(sistemaActivo ? "Si": "No")}");
+
+Console.Write("Ingrese una cantidad: ");
+string? entradaCantidad = Console.ReadLine();
+
+// Conversión segura a TryParse
+if(int.TryParse(entradaCantidad, out int cantidad)){
+    Console.WriteLine($"Cantidad: {cantidad}");
+    cantidadProductos = cantidad;
+}else {
+    Console.Write("Error: debe ingresar un número entero");
+}
+
+Console.Write("Ingrese un precio: ");
+string? entradaPrecio = Console.ReadLine();
+
+if(decimal.TryParse(entradaPrecio, out precio)){
+    Console.WriteLine($"Precio validado: {precio:C}");
+    valorTotalDelInventario = cantidadProductos * precio;
+    Console.WriteLine($"Valor total del inventario actualizado:: {valorTotalDelInventario:N2}");
+}
+
+Console.Write("Ingrese un comando o (use 'salir' para terminar): ");
+string? entrada = Console.ReadLine(); //Stdin: Lee la entrada del usuario
+
+if (string.IsNullOrWhiteSpace(entrada) || entrada.ToLower() == "salir") {
+    Console.WriteLine("Hasta luego. Saliendo... ");//Stdout: Salida del comando o programa
+    Environment.Exit(0);
+}
+
 // Modo interactgivo si no hay args
 // Write: Sirve para mostrar un mensaje al usuario sin saltos de línea, ideal para prompts
-
 
 void mostrarAyuda() {
     Console.WriteLine("Uso: inventarioApp [comando] [opciones]");
@@ -59,7 +91,6 @@ void mostrarAyuda() {
     Console.WriteLine("  dotnet run -- --version");
     Console.WriteLine("Si no se proporcionan opciones, el programa se ejecutará en modo interactivo.");
 }
-
 
 
 /*
