@@ -20,8 +20,7 @@ Además, se agrega un modo interactivo de prueba con un prompt básico para sali
 
 ### Cálculo de operación entre cantidad de **productos** por el **valor** de cada producto 
 
-Se añade un cálculo de operaciones por entrada del usuario para que pueda añadir la cantidad de productos disponibles y cuánto vale cada producto
-
+Se añade un cálculo de operaciones por entrada del usuario para que pueda añadir la cantidad de productos disponibles y cuánto vale cada producto. Además, se agrega la **anulabilidad segura** junto con un bucle `while` en caso de que la entrada de usuario sea nula o sin valor.
 ```
 Ejemplo:
 Ingrese una cantidad: 500

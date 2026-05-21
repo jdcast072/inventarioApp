@@ -1,6 +1,7 @@
 #Compilación
 bin/
 obj/
+dotnet/
 
 #IDE
 .vs/

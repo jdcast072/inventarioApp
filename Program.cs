@@ -2,6 +2,11 @@
 
 var assembly = Assembly.GetExecutingAssembly();
 var version = assembly.GetName().Version;
+int cantidadProductos = 0;
+decimal valorTotalDelInventario = 0.00m;
+bool sistemaActivo = true;
+string nombreSistema = "Sistema de Gestión de Inventario";
+decimal precio;
 
 if (args.Length > 0){
     switch (args[0].ToLower())
@@ -22,13 +27,6 @@ if (args.Length > 0){
     };
 };
 
-int cantidadProductos = 0;
-decimal valorTotalDelInventario = 0.00m;
-bool sistemaActivo = true;
-string nombreSistema = "Sistema de Gestión de Inventario";
-decimal precio;
-
-
 void mostrarBanner() {
 Console.WriteLine("╔══════════════════════════════════════╗");
 Console.WriteLine("║   SISTEMA DE GESTIÓN DE INVENTARIO   ║");
@@ -38,25 +36,23 @@ Console.WriteLine($"Versión del programa: {version}");
 Console.WriteLine($".NET version: {Environment.Version}");
 Console.WriteLine($"Plataforma del SO: {Environment.OSVersion.Platform}");
 Console.WriteLine($"Nombre ejecutado del programa: {assembly}");
+Console.WriteLine("Estado del sistema");
+Console.WriteLine($"Nombre: {nombreSistema}");
+Console.WriteLine($"Sistema Activo: {(sistemaActivo ? "Si": "No")}");
 }
 
 mostrarBanner();
 
-Console.WriteLine("Estado del sistema");
-Console.WriteLine($"Nombre: {nombreSistema}");
-Console.WriteLine($"Productos registrados: {cantidadProductos}");
-Console.WriteLine($"Valor total del inventario: ${valorTotalDelInventario:N2}");
-Console.WriteLine($"Sistema Activo: {(sistemaActivo ? "Si": "No")}");
-
 Console.Write("Ingrese una cantidad: ");
 string? entradaCantidad = Console.ReadLine();
+
 
 // Conversión segura a TryParse
 if(int.TryParse(entradaCantidad, out int cantidad)){
     Console.WriteLine($"Cantidad: {cantidad}");
     cantidadProductos = cantidad;
 }else {
-    Console.Write("Error: debe ingresar un número entero");
+    Console.Write("Error: debe ingresar un número entero\n");
 }
 
 Console.Write("Ingrese un precio: ");
@@ -67,6 +63,34 @@ if(decimal.TryParse(entradaPrecio, out precio)){
     valorTotalDelInventario = cantidadProductos * precio;
     Console.WriteLine($"Valor total del inventario actualizado:: {valorTotalDelInventario:N2}");
 }
+
+while(sistemaActivo){
+    
+    Console.Write("\ninventarioApp> ");
+    string? input = Console.ReadLine();
+    
+    //Aplicar el manejo seguro
+    string comando = string.IsNullOrEmpty(input) ? "salir" : input.Trim().ToLower();
+    switch(comando){
+        case "salir":
+            sistemaActivo = false;
+            Console.WriteLine("Saliendo de la consulta del inventario, Hasta Luego ...!");
+            break;
+        case "listar":
+            Console.WriteLine($"Productos del inventario: {cantidadProductos}");
+            break;
+        case "":
+            break;
+
+        default:
+        Console.WriteLine($"Comando '{comando}' no es reconocido.");
+        Console.WriteLine("Comandos disponibles: listar, agregar, buscar, salir.");
+        break;
+    }
+}
+
+Console.WriteLine($"Productos registrados: {cantidadProductos}");
+Console.WriteLine($"Valor total del inventario: ${valorTotalDelInventario:N2}");
 
 Console.Write("Ingrese un comando o (use 'salir' para terminar): ");
 string? entrada = Console.ReadLine(); //Stdin: Lee la entrada del usuario
@@ -91,17 +115,3 @@ void mostrarAyuda() {
     Console.WriteLine("  dotnet run -- --version");
     Console.WriteLine("Si no se proporcionan opciones, el programa se ejecutará en modo interactivo.");
 }
-
-
-/*
-Console.WriteLine("📁 Estructura:");
-Console.WriteLine("   ✓ Configuración .csproj");
-Console.WriteLine("   ✓ Estructura src/Models/");
-Console.WriteLine("   ✓ .gitignore configurado");
-Console.WriteLine("   ✓ README.md documentado");
-Console.WriteLine();
-Console.WriteLine("═══════════════════════════════════════");
-Console.WriteLine("  ✓ MÓDULO 1 COMPLETADO");
-Console.WriteLine("  → Siguiente: Módulo 2 - CLI interactiva");
-Console.WriteLine("═══════════════════════════════════════");
-*/
